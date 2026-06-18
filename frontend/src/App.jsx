@@ -7,16 +7,25 @@ import Register from './component/register'
 import Login from './component/login'
 import Home from "./component/home"
 import { Route, Routes } from 'react-router-dom'
+import ProtectedRoute from './component/protectedroutes'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  
+  // useEffect(() => {
+  //   checkUser();
+  // }, []);                it better to use useffect  in context provider so that we can use it in any component
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={ <Login/>} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Home/>} />
+        <Route path="/home" element={
+          <ProtectedRoute >
+            <Home/>
+          </ProtectedRoute>
+        } />
       </Routes>
     </>
   )

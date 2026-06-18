@@ -138,7 +138,7 @@ const logoutuser=async(req,res)=>{
 
 const getuserdetails=async(req,res)=>{
   try{
-    
+  
     const user = await User.findById(req.user._id).select("-password -refreshToken");
     return res.status(200).json({
             success: true,
@@ -147,7 +147,7 @@ const getuserdetails=async(req,res)=>{
     })
 
   }catch(error){
-    console.log(e);
+    console.log(error);
       res.status(500).json({
         success: false,
         message: "Some error occured",
