@@ -136,4 +136,24 @@ const logoutuser=async(req,res)=>{
 
 }
 
-export {registeruser,loginuser,logoutuser}
+const getuserdetails=async(req,res)=>{
+  try{
+    
+    const user = await User.findById(req.user._id).select("-password -refreshToken");
+    return res.status(200).json({
+            success: true,
+            user:user,
+            message: "details fetyched succesffully"
+    })
+
+  }catch(error){
+    console.log(e);
+      res.status(500).json({
+        success: false,
+        message: "Some error occured",
+      });
+
+}
+}
+
+export {registeruser,loginuser,logoutuser,getuserdetails}

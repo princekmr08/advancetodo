@@ -1,5 +1,6 @@
 import { Todo } from "../model/todocateg.model.js";
 import {SubTodo} from "../model/subtodo.model.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
 const todocategory=async(req,res)=>{
@@ -25,11 +26,21 @@ const createSubTodo = async (req, res) => {
         const userid = req.user._id;
         const category = req.params.category;
         const { description } = req.body;
+         const localFilePath = req.file?.path;
+
+         console.log("localFilePath", localFilePath);
+
+         const cloudianryres=await uploadOnCloudinary(localFilePath);
+         console.log(cloudianryres.url);
+         const imageurl=cloudianryres?.url || "";
+
+       
 
         const newSubTodo = await SubTodo.create({
             description,
             owner: userid,
-            category
+            category,
+            image:imageurl
         });
 
         res.status(201).json(newSubTodo);
